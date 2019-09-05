@@ -1,0 +1,14 @@
+const express = require("express");
+
+const server = express();
+
+// Allows the server to parse request body as JSON
+server.use(express.json());
+
+server.get("/", (_req, res) => {
+  res.json({
+    message: "Hello, server"
+  });
+});
+
+module.exports = server;
