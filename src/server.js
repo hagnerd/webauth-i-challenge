@@ -5,6 +5,7 @@ const cors = require("cors");
 const KnexSessionStore = require("connect-session-knex")(session);
 require("dotenv").config();
 
+const restrictedMiddleware = require("./middleware/restricted");
 const registerRouter = require("./routes/register");
 const loginRouter = require("./routes/login");
 const usersRouter = require("./routes/users");
@@ -35,6 +36,7 @@ server.use(express.json());
 server.use("/api/register", registerRouter);
 server.use("/api/login", loginRouter);
 server.use("/api/users", usersRouter);
+server.use("/api/restricted", restrictedMiddleware);
 
 server.get("/", (_req, res) => {
   res.json({
