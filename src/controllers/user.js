@@ -19,8 +19,18 @@ async function userExists(username) {
   return !!user;
 }
 
+async function findByUsername(username) {
+  const [user] = await db
+    .select("*")
+    .from("users")
+    .where({ username });
+
+  return user ? user : null;
+}
+
 module.exports = {
   register,
   getAll,
-  userExists
+  userExists,
+  findByUsername
 };
