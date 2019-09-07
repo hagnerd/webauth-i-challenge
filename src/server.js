@@ -7,6 +7,7 @@ require("dotenv").config();
 
 const registerRouter = require("./routes/register");
 const loginRouter = require("./routes/login");
+const usersRouter = require("./routes/users");
 
 const server = express();
 const store = new KnexSessionStore();
@@ -33,6 +34,7 @@ server.use(
 server.use(express.json());
 server.use("/api/register", registerRouter);
 server.use("/api/login", loginRouter);
+server.use("/api/users", usersRouter);
 
 server.get("/", (_req, res) => {
   res.json({
