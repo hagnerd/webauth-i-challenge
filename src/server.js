@@ -1,11 +1,32 @@
 const express = require("express");
+const session = require("express-session");
+const KnexSessionStore = require("connect-session-knex")(session);
+require("dotenv").config();
+
 const registerRouter = require("./routes/register");
+const loginRouter = require("./routes/login");
 
 const server = express();
+const store = new KnexSessionStore();
 
+server.use(
+  session({
+    name: "",
+    secret: process.env.SECRET || "supersecret",
+    cookie: {
+      maxAge: 1 * 24 * 60 * 60 * 1000,
+      secure: true
+    },
+    httpOnly: true,
+    resave: false,
+    saveUninitialized: false,
+    store
+  })
+);
 // Allows the server to parse request body as JSON
 server.use(express.json());
 server.use("/api/register", registerRouter);
+server.use("/api/login", loginRouter);
 
 server.get("/", (_req, res) => {
   res.json({
