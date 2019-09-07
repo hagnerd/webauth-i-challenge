@@ -1,5 +1,7 @@
 const express = require("express");
 const session = require("express-session");
+const helmet = require("helmet");
+const cors = require("cors");
 const KnexSessionStore = require("connect-session-knex")(session);
 require("dotenv").config();
 
@@ -9,13 +11,17 @@ const loginRouter = require("./routes/login");
 const server = express();
 const store = new KnexSessionStore();
 
+server.use(helmet());
+server.use(cors());
+
 server.use(
   session({
     name: "",
     secret: process.env.SECRET || "supersecret",
     cookie: {
       maxAge: 1 * 24 * 60 * 60 * 1000,
-      secure: true
+      secure: false
+      // secure: true
     },
     httpOnly: true,
     resave: false,
