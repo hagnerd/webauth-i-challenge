@@ -9,7 +9,7 @@ router.post("/", async (req, res) => {
   let user = await User.findByUsername(username);
 
   if (user && bcrypt.compareSync(password, user.password)) {
-    req.session.user = user;
+    req.session.user = user.id;
 
     res.status(200).json({
       message: `Logged in`

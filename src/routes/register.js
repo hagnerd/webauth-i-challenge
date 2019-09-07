@@ -35,6 +35,7 @@ router.post("/", [validateRegistration, validateNewUser], async (req, res) => {
 
   try {
     const userId = await User.register({ username, password });
+    req.session.user = userId;
 
     // Come back and change this to send back a cookie
     res.status(201).json({
